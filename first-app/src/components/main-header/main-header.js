@@ -3,9 +3,12 @@ import Image from 'next/image'
 
 import logoImg from '@/assets/logo.png'
 import classes from './main-header.module.css'
+import MainHeaderBackground from './main-header-background'
 
 export default function MainHeader(){
     return (
+        <>
+        <MainHeaderBackground/>
         <header className={classes.header}>
             <Link href='/'
             className={classes.logo}>
@@ -28,5 +31,7 @@ export default function MainHeader(){
                 </ul>
             </nav>
         </header>
+        </>
+     
     )
 }
