@@ -4,10 +4,12 @@ import mealIcon from '@/assets/icons/meal.png';
 import communityIcon from '@/assets/icons/community.png';
 import eventsIcon from '@/assets/icons/events.png';
 import classes from './page.module.css';
+import MainHeader from '@/components/main-header/main-header';
 
 export default function CommunityPage() {
   return (
     <>
+        <MainHeader/>
       <header className={classes.header}>
         <h1>
           One shared passion: <span className={classes.highlight}>Food</span>

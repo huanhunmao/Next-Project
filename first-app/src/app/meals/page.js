@@ -3,6 +3,7 @@ import classes from './page.module.css'
 import Link from 'next/link'
 import { getMeals } from '@/lib/getMeals'
 import { Suspense } from 'react'
+import MainHeader from '@/components/main-header/main-header'
 
 async function Meals(){
     const meals = await getMeals()
@@ -14,6 +15,7 @@ export default function MealPage(){
 
     return (
         <>
+         <MainHeader/>
         <header className={classes.header}>
             <h1>
                 Delicious meals, created {''}
