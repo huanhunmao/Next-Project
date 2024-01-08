@@ -1,5 +1,5 @@
 // if u visit this url--> http://localhost:3000/meals/xxx
-import { getMeal } from '@/lib/getMeals'
+import { getMeal } from '@/lib/meals'
 import classes from './page.module.css'
 import Image from 'next/image'
 
