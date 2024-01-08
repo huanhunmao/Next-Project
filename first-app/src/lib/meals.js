@@ -14,21 +14,21 @@ export  function getMeal(slug){
     return db.prepare('SELECT * FROM meals WHERE slug = ?').get(slug)
 }
 
-export function saveMeal(meal){
+export async function saveMeal(meal){
     meal.slug = slugify(meal.title, {lower: true})
     meal.instructions = xss(meal.instructions)
 
-    const extension = meal.image && meal.image.split('.').pop() || ''
+    const extension =  meal.image.name.split('.').pop() || ''
     const fileName = `${meal.slug}.${extension}`
 
     // 如何使用 fs 将图片存储到 本地 file 内 而不是 存到服务器
     const stream = fs.createWriteStream(`public/images/${fileName}`)
-    const bufferedImage = meal.image && meal.image.arrayBuffer()
+    const bufferedImage =  await meal.image.arrayBuffer()
 
-    meal.image && stream.write(Buffer.from(bufferedImage, error => {
+     stream.write(Buffer.from(bufferedImage, error => {
         if(error){
-            // throw new Error('Saving image failed!')
-            console.error(error)
+            throw new Error('Saving image failed!')
+            // console.error(error)
         }
     }))
 

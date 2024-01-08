@@ -12,22 +12,33 @@ export default function ImagePicker({label, name}){
         imageInput.current.click()
     }
 
-    function handleInputChanged(event){
-        const file = event.target.files[0]
-
-        if(!file) {
-            setPickedImage(null)
-            return 
+    function handleInputChanged(event) {
+        const file = event.target.files[0];
+    
+        if (!file) {
+            setPickedImage(null);
+            return;
         }
-
-        const fileReader = new FileReader()
-
+    
+        if (!file.type.startsWith('image/')) {
+            // 文件类型不是图像
+            console.error('请选择图像文件');
+            return;
+        }
+    
+        const fileReader = new FileReader();
+    
         fileReader.onload = () => {
-            setPickedImage(fileReader.result)
-        }
-
-        fileReader.readAsDataURL(file)
+            setPickedImage(fileReader.result);
+        };
+    
+        fileReader.onerror = (error) => {
+            console.error('文件读取失败:', error);
+        };
+    
+        fileReader.readAsDataURL(file);
     }
+    
 
     return (
         <div className={classes.picker}>
@@ -35,7 +46,9 @@ export default function ImagePicker({label, name}){
             <div className={classes.controls}>
                 <div className={classes.preview}>
                     {!pickedImage && <p>No image picked yet</p>}
-                    {pickedImage && <Image src={pickedImage} alt='The image selected by the user'/>}
+                    {pickedImage && <img style={{width:'10rem', height:'10rem'}} src={pickedImage} alt='The image selected by the user' />
+
+}
                 </div>
                 <input
                 className={classes.input}
