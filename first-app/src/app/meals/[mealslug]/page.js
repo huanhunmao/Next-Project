@@ -9,6 +9,7 @@ export async function generateMetadata({ params }){
     return {
         title: meal.title,
         description: meal.description,
+        
     }
 }
 
