@@ -2,7 +2,7 @@
 function EventPage(){
     return (
         <div>
-            <h1>The EventPage </h1>
+            <h1>The All Events Page </h1>
         </div>
     )
 }
