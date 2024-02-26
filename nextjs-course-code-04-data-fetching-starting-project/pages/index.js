@@ -1,5 +1,6 @@
 import path from 'path'
 import fs from 'fs/promises'
+import Link from 'next/link'
 
 function HomePage(props) {
     const {products} = props;
@@ -7,7 +8,9 @@ function HomePage(props) {
     <ul>
       {
         products.map(product => (
-            <li key={product.id}>{product.title}</li>
+            <li>
+            <Link href={`/${product.id}`}>{product.title}</Link>
+            </li>
         ))
       }
     </ul>
@@ -15,7 +18,7 @@ function HomePage(props) {
 }
 
 export async function  getStaticProps(){
-    console.log('Re generating');
+    // console.log('Re generating');
     // process.cwd() 表示当前文件夹
     const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json')
     const jsonData = await fs.readFile(filePath)
