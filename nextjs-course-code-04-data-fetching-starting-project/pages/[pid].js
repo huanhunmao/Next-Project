@@ -5,6 +5,11 @@ import { Fragment } from 'react'
 // npm run build 
  function ProductDetailPage(props){
     const { loadedProduct } = props
+
+    if(!loadedProduct){
+        return <p>Loading ... </p>
+    }
+
     const { title, description } = loadedProduct
     
     return (
@@ -44,11 +49,13 @@ export async function getStaticPaths(){
     return {
         paths: [
             {params: {pid: 'p1'}},
-            {params: {pid: 'p2'}},
-            {params: {pid: 'p3'}},
-            {params: {pid: 'p4'}}
+            // {params: {pid: 'p2'}},
+            // {params: {pid: 'p3'}},
+            // {params: {pid: 'p4'}}
         ],
-        fallback: false
+        // fallback: false  // 如果写 false 上面 paths 中没有预先写好 就会 404
+        // fallback: true // 直接点击链接 可以进入 但如果直接输入 url 比如 http://localhost:3000/p2 就会报错需要上面加检查  if(!loadedProduct){...}
+        fallback: 'blocking' // 将在服务器端阻塞并立即生成该页面  速度会慢些  临时生成 生成好后展示
     }
 }
 
