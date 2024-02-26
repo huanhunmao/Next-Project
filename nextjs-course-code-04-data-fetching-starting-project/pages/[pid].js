@@ -2,6 +2,7 @@ import path from 'path'
 import fs from 'fs/promises'
 import { Fragment } from 'react'
 
+// npm run build 
  function ProductDetailPage(props){
     const { loadedProduct } = props
     const { title, description } = loadedProduct
