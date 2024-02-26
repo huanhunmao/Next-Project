@@ -20,17 +20,22 @@ import { Fragment } from 'react'
     )
 }
 
+async function getData(){
+    const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json')
+    const jsonData = await fs.readFile(filePath)
+    // JSON.parse 转为数组/对象
+    const data = JSON.parse(jsonData)
+
+    return data
+}
+
 // 用于在构建时获取并预渲染页面的静态数据
 export async function getStaticProps(context){
     const { params } = context
 
     const paramsId = params.pid
 
-
-    const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json')
-    const jsonData = await fs.readFile(filePath)
-    // JSON.parse 转为数组/对象
-    const data = JSON.parse(jsonData)
+    const data = await getData()
 
     const product = data.products.find(product => product.id === paramsId)
 
@@ -46,13 +51,14 @@ export async function getStaticProps(context){
 // 当应用中有需要根据动态参数（例如 /posts/[id].js 中的 [id]）来渲染不同内容的页面时，
 // Next.js 需要知道应该为哪些参数值创建预渲染的静态页面
 export async function getStaticPaths(){
+    const data = await getData()
+    const ids = data.products.map(product => product.id)
+    const pathWithParams = ids.map(id => ({
+        params: {pid: id}
+    }))
+    
     return {
-        paths: [
-            {params: {pid: 'p1'}},
-            // {params: {pid: 'p2'}},
-            // {params: {pid: 'p3'}},
-            // {params: {pid: 'p4'}}
-        ],
+        paths: pathWithParams,
         // fallback: false  // 如果写 false 上面 paths 中没有预先写好 就会 404
         // fallback: true // 直接点击链接 可以进入 但如果直接输入 url 比如 http://localhost:3000/p2 就会报错需要上面加检查  if(!loadedProduct){...}
         fallback: 'blocking' // 将在服务器端阻塞并立即生成该页面  速度会慢些  临时生成 生成好后展示
