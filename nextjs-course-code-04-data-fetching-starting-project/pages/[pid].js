@@ -39,6 +39,12 @@ export async function getStaticProps(context){
 
     const product = data.products.find(product => product.id === paramsId)
 
+    if(!product){
+        return {
+            notFound: true
+        }
+    }
+
     return {
         props: {
             loadedProduct: product
@@ -60,8 +66,8 @@ export async function getStaticPaths(){
     return {
         paths: pathWithParams,
         // fallback: false  // 如果写 false 上面 paths 中没有预先写好 就会 404
-        // fallback: true // 直接点击链接 可以进入 但如果直接输入 url 比如 http://localhost:3000/p2 就会报错需要上面加检查  if(!loadedProduct){...}
-        fallback: 'blocking' // 将在服务器端阻塞并立即生成该页面  速度会慢些  临时生成 生成好后展示
+        fallback: true // 直接点击链接 可以进入 但如果直接输入 url 比如 http://localhost:3000/p2 就会报错需要上面加检查  if(!loadedProduct){...}
+        // fallback: 'blocking' // 将在服务器端阻塞并立即生成该页面  速度会慢些  临时生成 生成好后展示
     }
 }
 
