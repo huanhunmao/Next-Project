@@ -3,6 +3,7 @@ import EventList from "../components/events/event-list"
 // import { getFeaturedEvents } from "../dummy-data"
 import useSWR  from 'swr'
 // import { getFeaturedEvents } from "../helpers/api-util";
+import Head from 'next/head'
 
 function HomePage(){
     const [featuredEvents, setFeaturedEvents] = useState([])
@@ -41,6 +42,13 @@ function HomePage(){
 
     return (
         <div>
+            <Head>
+                <title>NextJs Events</title>
+                <meta
+            name='description'
+            content='Find a lot of good events that allow u to choose ... '
+            />
+            </Head>
             <EventList items={featuredEvents}/>
         </div>
     )
