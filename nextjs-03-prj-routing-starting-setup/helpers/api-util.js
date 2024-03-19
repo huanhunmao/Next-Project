@@ -3,16 +3,16 @@ export async function getAllEvents() {
     const response = await fetch('https://nextjs-50eda-default-rtdb.firebaseio.com/events.json');
 
     const data = await response.json();
-    console.log('data',data);
-    // const events = []
-    // for (const key of data){
-    //     events.push({
-    //         id:key,
-    //         ...data[key],
-    //     })
-    // }
 
-    // return events;
+    const events = []
+    for (const key of data){
+        events.push({
+            id:key,
+            ...data[key],
+        })
+    }
+
+    return events;
 }
 
 // export async function getFeaturedEvents(){
