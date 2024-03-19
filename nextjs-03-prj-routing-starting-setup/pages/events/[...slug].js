@@ -6,7 +6,7 @@ import ResultsTitle from '../../components/events/results-title'
 import ErrorAlert from '../../components/events/error-alert'
 import Button from '../../ui/button'
 
-function FilteredEventsPage(){
+function FilteredEventsPage(props){
     const router = useRouter()
 
     const filterData = router.query.slug
@@ -23,8 +23,7 @@ function FilteredEventsPage(){
     const numMonth = +filteredMonth
     const date = new Date(numYear, numMonth)
 
-    if(isNaN(numYear) || isNaN(numMonth) || numYear > 2030 ||
-     numYear < 2021 || numMonth < 1 || numMonth > 12){
+    if(props.hasError){
         return (
             <Fragment>
                 <ErrorAlert>
@@ -55,6 +54,30 @@ function FilteredEventsPage(){
             <EventList items={filteredEvents}/>
         </Fragment>
     )
+}
+
+
+export async function getServerSideProps(context){
+    const { params } = context
+
+    const filterData = params.slug 
+
+    const filteredYear = filterData[0]
+    const filteredMonth = filterData[1]
+
+    const numYear = +filteredYear
+    const numMonth = +filteredMonth
+
+    if(isNaN(numYear) || isNaN(numMonth) || numYear > 2030 ||
+     numYear < 2021 || numMonth < 1 || numMonth > 12){
+        return {
+                props: { hasError: true}
+            }
+    }
+
+    return {
+        props: { hasError: false}
+    }
 }
 
 export default FilteredEventsPage
