@@ -1,8 +1,8 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import useSWR from 'swr';
 
-function LastSalesPage(){
-    const [sales, setSales] = useState()
+function LastSalesPage(props){
+    const [sales, setSales] = useState(props.sales);
 
     // 定义一个异步获取数据的函数
 const fetchData = async () => {
@@ -23,7 +23,6 @@ const fetchData = async () => {
 
   
     const { data, error } = useSWR('data',fetchData);
-    console.log(data);
 
     if (error) {
         return <p>Has errors</p>;
@@ -76,6 +75,28 @@ const fetchData = async () => {
         }
         </ul>
     )
+}
+
+export   function getStaticProps(){
+    const transformData = []
+    fetch('https://nextjs-50eda-default-rtdb.firebaseio.com/sales.json',)
+            .then(data => data.json())
+            .then(data => {
+                for(let key in data){
+                    transformData.push({
+                        id: key,
+                        username: data[key].username,
+                        volume: data[key].volume
+                    })
+                }
+            })
+
+    return {
+        props:{
+            sales: transformData,
+            revalidate:10 // 10s 验证一次
+        }
+    }
 }
 
 export default  LastSalesPage
