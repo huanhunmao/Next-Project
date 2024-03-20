@@ -4,6 +4,10 @@ import classes from  '../../styles/event-list.module.css'
 function EventList(props){
     const { items } = props;
 
+    if(!items){
+        return <p>Loading ...</p>
+    }
+
     return (
         <ul className={classes.list}>
             {items.map(event => <EventItem 
