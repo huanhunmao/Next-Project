@@ -5,6 +5,7 @@ import { Fragment } from 'react'
 import ResultsTitle from '../../components/events/results-title'
 import ErrorAlert from '../../components/events/error-alert'
 import Button from '../../ui/button'
+import Head from 'next/head'
 
 function FilteredEventsPage(props){
     const router = useRouter()
@@ -50,6 +51,13 @@ function FilteredEventsPage(props){
 
     return (
         <Fragment>
+            <Head>
+                <title>Filter items</title>
+                <meta
+            name='description'
+            content={`${numYear}/${numMonth}`}
+            />
+            </Head>
             <ResultsTitle date={date}/>
             <EventList items={filteredEvents}/>
         </Fragment>
