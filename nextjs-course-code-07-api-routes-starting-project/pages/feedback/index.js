@@ -5,7 +5,7 @@ function FeedbackPage(props){
     const [eachEmail,setEachEmail] = useState(null)
 
     function seeEachEmail(id){
-        fetch(`/api/${id}`).then(res => res.json())
+        fetch(`/api/feedback/${id}`).then(res => res.json())
         .then(data => setEachEmail(data.feedback))
         .catch(err => console.error(err))
     }
