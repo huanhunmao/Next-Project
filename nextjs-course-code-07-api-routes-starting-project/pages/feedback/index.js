@@ -1,12 +1,28 @@
+import { useState } from "react"
 import { buildFeedbackPath,extractFeedback } from "../api/feedback"
 
 function FeedbackPage(props){
+    const [eachEmail,setEachEmail] = useState(null)
+
+    function seeEachEmail(id){
+        fetch(`/api/${id}`).then(res => res.json())
+        .then(data => setEachEmail(data.feedback))
+        .catch(err => console.error(err))
+    }
 
     return <ul>
         {
-            props.feedbackItems.map(item => 
+            <>
+            {
+                eachEmail && eachEmail.email
+            }
+           { props.feedbackItems.map(item =>
+                <>
                 <li key={item.id}>{item.text}</li>
-            )
+                <button onClick={seeEachEmail.bind(null, item.id)}>Seed email</button>
+                </>
+            )}
+            </>
         }
     </ul>
 }
