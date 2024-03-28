@@ -2,12 +2,10 @@ import Head from 'next/head';
 
 import Layout from '../components/layout/layout';
 import '../styles/globals.css';
-import Notification from '../components/notification/notification';
-import { NotificationContextProvider } from '../store/notification-context';
+import Notification from '../components/ui/notification/notification';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <NotificationContextProvider>
     <Layout>
       <Head>
         <title>Next Events</title>
@@ -17,7 +15,6 @@ function MyApp({ Component, pageProps }) {
       <Component {...pageProps} />
       <Notification status='pending'/>
     </Layout>
-    </NotificationContextProvider>
   );
 }
 
